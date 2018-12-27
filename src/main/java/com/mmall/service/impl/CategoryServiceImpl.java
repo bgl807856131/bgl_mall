@@ -27,6 +27,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Override
     public ServerResponse addCategory(String categoryName, Integer parentId){
         if(parentId == null || StringUtils.isBlank(categoryName)){
             return ServerResponse.createByErrorMessage("添加分类参数错误");
@@ -43,6 +44,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createByErrorMessage("添加商品分类失败");
     }
 
+    @Override
     public ServerResponse updateCategoryName(Integer categoryId, String categoryName){
         if(categoryId == null || StringUtils.isBlank(categoryName)){
             return ServerResponse.createByErrorMessage("更新商品分类参数错误");
@@ -58,6 +60,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createByErrorMessage("更新商品分类名称失败");
     }
 
+    @Override
     public ServerResponse<List<Category>> getChildrenParallelCategory(Integer categoryId){
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
         if(CollectionUtils.isEmpty(categoryList)){
@@ -66,6 +69,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createBySuccess(categoryList);
     }
 
+    @Override
     public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId){
         List<Integer> categoryIdList = Lists.newArrayList();
         if(categoryId != null){
