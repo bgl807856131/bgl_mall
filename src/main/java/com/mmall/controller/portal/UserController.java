@@ -112,10 +112,10 @@ public class UserController {
         return iUserService.checkAnswer(username, question, answer);
     }
 
-    @RequestMapping(value = "forget_reset_pswd.do", method= RequestMethod.POST)
+    @RequestMapping(value = "forget_reset_password.do", method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> forgetResetPswd(String username, String newPassword, String forgetToken){
-        return iUserService.forgetResetPswd(username, newPassword, forgetToken);
+    public ServerResponse<String> forgetResetPswd(String username, String passwordNew, String forgetToken){
+        return iUserService.forgetResetPswd(username, passwordNew, forgetToken);
     }
 
     @RequestMapping(value = "reset_password.do", method= RequestMethod.POST)
@@ -137,7 +137,7 @@ public class UserController {
         }
         user.setId(currentUser.getId());
         user.setUsername(currentUser.getUsername());
-        ServerResponse<User> response = iUserService.updateInfomation(user);
+        ServerResponse<User> response = iUserService.updateInformation(user);
         if(response.isSuccess()){
             response.getData().setUsername(currentUser.getUsername());
             session.setAttribute(Constant.CURRENT_USER, response.getData());
@@ -147,11 +147,11 @@ public class UserController {
 
     @RequestMapping(value = "get_information.do", method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> getInfomation(HttpSession session){
+    public ServerResponse<User> getInformation(HttpSession session){
         User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
         if(currentUser == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
         }
-        return iUserService.getInfomation(currentUser.getId());
+        return iUserService.getInformation(currentUser.getId());
     }
 }
