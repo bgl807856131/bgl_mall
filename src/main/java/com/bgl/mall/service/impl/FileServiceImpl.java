@@ -3,6 +3,7 @@ package com.bgl.mall.service.impl;
 import com.google.common.collect.Lists;
 import com.bgl.mall.service.IFileService;
 import com.bgl.mall.util.FTPUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,8 @@ import java.util.UUID;
  * Created by BGL on 2017/6/27.
  */
 @Service("iFileService")
+@Slf4j
 public class FileServiceImpl implements IFileService{
-
-    private static Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
     public String upload(MultipartFile file, String path){
@@ -26,7 +26,7 @@ public class FileServiceImpl implements IFileService{
         //拿到上传文件的扩展名，重新生成文件名避免重复
         String fileExtensionName = fileName.substring(fileName.lastIndexOf(".") + 1);
         String uploadFileName = UUID.randomUUID().toString() + "." + fileExtensionName;
-        logger.info("开始上传文件,上传的文件名{},上传的文件路径{},新的文件名{}", fileName, path, uploadFileName);
+        log.info("开始上传文件,上传的文件名{},上传的文件路径{},新的文件名{}", fileName, path, uploadFileName);
 
         File fileDir = new File(path);
         if(!fileDir.exists()){
@@ -43,7 +43,7 @@ public class FileServiceImpl implements IFileService{
             //上传完成，删除upload下面的文件
             targetFile.delete();
         } catch (IOException e) {
-            logger.error("上传文件异常", e);
+            log.error("上传文件异常", e);
         }
 
         return targetFile.getName();

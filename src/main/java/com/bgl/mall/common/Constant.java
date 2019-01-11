@@ -1,6 +1,7 @@
 package com.bgl.mall.common;
 
 import com.google.common.collect.Sets;
+import lombok.Getter;
 
 import java.util.Set;
 
@@ -23,18 +24,14 @@ public class Constant {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc", "price_asc");
     }
 
+    @Getter
     public enum  ProductStatusEnum{
         ON_SALE(1, "在线");
 
         private int code;
+
         private String value;
 
-        public int getCode() {
-            return code;
-        }
-        public String getValue() {
-            return value;
-        }
         ProductStatusEnum(int code, String value){
             this.code = code;
             this.value = value;

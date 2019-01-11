@@ -1,5 +1,7 @@
 package com.bgl.mall.util;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import java.util.List;
 /**
  * Created by BGL
  */
+@Getter
+@Setter
 public class FTPUtil {
 
     private static  final Logger logger = LoggerFactory.getLogger(FTPUtil.class);
@@ -77,45 +81,5 @@ public class FTPUtil {
             logger.error("连接FTP服务器异常",e);
         }
         return isSuccess;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public FTPClient getFtpClient() {
-        return ftpClient;
-    }
-
-    public void setFtpClient(FTPClient ftpClient) {
-        this.ftpClient = ftpClient;
     }
 }

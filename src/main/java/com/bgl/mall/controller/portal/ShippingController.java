@@ -8,25 +8,24 @@ import com.bgl.mall.pojo.User;
 import com.bgl.mall.service.IShippingService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * Created by BGL on 2017/8/15.
  */
-@Controller
+@RestController
 @RequestMapping("/shipping/")
 public class ShippingController {
 
     @Autowired
     private IShippingService iShippingService;
 
-    @RequestMapping("add.do")
-    @ResponseBody
+    @PostMapping("add.do")
     public ServerResponse add(HttpSession session, Shipping shipping){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -35,8 +34,7 @@ public class ShippingController {
         return iShippingService.add(user.getId(), shipping);
     }
 
-    @RequestMapping("del.do")
-    @ResponseBody
+    @PostMapping("del.do")
     public ServerResponse delete(HttpSession session, Integer shippingId){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -45,8 +43,7 @@ public class ShippingController {
         return iShippingService.delete(user.getId(), shippingId);
     }
 
-    @RequestMapping("update.do")
-    @ResponseBody
+    @PostMapping("update.do")
     public ServerResponse update(HttpSession session, Shipping shipping){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -55,8 +52,7 @@ public class ShippingController {
         return iShippingService.update(user.getId(), shipping);
     }
 
-    @RequestMapping("select.do")
-    @ResponseBody
+    @PostMapping("select.do")
     public ServerResponse select(HttpSession session, Integer shippingId){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -65,8 +61,7 @@ public class ShippingController {
         return iShippingService.select(user.getId(), shippingId);
     }
 
-    @RequestMapping("list.do")
-    @ResponseBody
+    @PostMapping("list.do")
     public ServerResponse<PageInfo> list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10")int pageSize,
                                          HttpSession session){

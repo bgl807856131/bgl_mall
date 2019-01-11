@@ -2,20 +2,20 @@ package com.bgl.mall.controller.backend;
 
 import com.bgl.mall.common.Constant;
 import com.bgl.mall.common.ResponseCode;
-import com.bgl.mall.service.IProductService;
-import com.google.common.collect.Maps;
 import com.bgl.mall.common.ServerResponse;
 import com.bgl.mall.pojo.Product;
 import com.bgl.mall.pojo.User;
 import com.bgl.mall.service.IFileService;
+import com.bgl.mall.service.IProductService;
 import com.bgl.mall.service.IUserService;
 import com.bgl.mall.util.PropertiesUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,19 +26,20 @@ import java.util.Map;
 /**
  * Created by BGL on 2017/6/12.
  */
-@Controller
+@RestController
 @RequestMapping("manage/product")
 public class ProductManageController {
 
     @Autowired
     private IUserService iUserService;
+
     @Autowired
     private IProductService iProductService;
+
     @Autowired
     private IFileService iFileService;
 
-    @RequestMapping("save.do")
-    @ResponseBody
+    @PostMapping("save.do")
     public ServerResponse productSave(HttpSession session, Product product){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -52,8 +53,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("set_sale_status.do")
-    @ResponseBody
+    @PostMapping("set_sale_status.do")
     public ServerResponse setSaleStatus(HttpSession session, Integer productId, Integer status){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -66,8 +66,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("detail.do")
-    @ResponseBody
+    @PostMapping("detail.do")
     public ServerResponse getDetail(HttpSession session, Integer productId){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -81,8 +80,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("list.do")
-    @ResponseBody
+    @PostMapping("list.do")
     public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -96,8 +94,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("search.do")
-    @ResponseBody
+    @PostMapping("search.do")
     public ServerResponse productSearch(HttpSession session, String productName, Integer productId, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -111,8 +108,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("upload.do")
-    @ResponseBody
+    @PostMapping("upload.do")
     public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -133,8 +129,7 @@ public class ProductManageController {
     }
 
 
-    @RequestMapping("richtext_img_upload.do")
-    @ResponseBody
+    @PostMapping("richtext_img_upload.do")
     public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
         Map resultMap = Maps.newHashMap();
         User user = (User)session.getAttribute(Constant.CURRENT_USER);

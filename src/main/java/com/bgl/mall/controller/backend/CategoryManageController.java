@@ -1,21 +1,23 @@
 package com.bgl.mall.controller.backend;
 
-import com.bgl.mall.common.ResponseCode;
 import com.bgl.mall.common.Constant;
+import com.bgl.mall.common.ResponseCode;
 import com.bgl.mall.common.ServerResponse;
 import com.bgl.mall.pojo.User;
 import com.bgl.mall.service.ICategoryService;
 import com.bgl.mall.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * Created by BGL on 2017/6/9.
  */
-@Controller
+@RestController
 @RequestMapping("/manage/category")
 public class CategoryManageController {
 
@@ -32,8 +34,7 @@ public class CategoryManageController {
      * @param parentId
      * @return
      */
-    @RequestMapping(value = "add_category.do")
-    @ResponseBody
+    @PostMapping(value = "add_category.do")
     public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId", defaultValue = "0")int parentId)
     {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
@@ -57,8 +58,7 @@ public class CategoryManageController {
      * @param categoryName
      * @return
      */
-    @RequestMapping(value = "set_category_name.do")
-    @ResponseBody
+    @PostMapping(value = "set_category_name.do")
     public ServerResponse setCategoryName(HttpSession session, Integer categoryId, String categoryName){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -80,8 +80,7 @@ public class CategoryManageController {
      * @param categoryId
      * @return
      */
-    @RequestMapping("get_category.do")
-    @ResponseBody
+    @PostMapping("get_category.do")
     public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -96,8 +95,7 @@ public class CategoryManageController {
         }
     }
 
-    @RequestMapping("get_deep_category.do")
-    @ResponseBody
+    @PostMapping("get_deep_category.do")
     public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){

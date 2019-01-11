@@ -5,19 +5,17 @@ import com.bgl.mall.common.ResponseCode;
 import com.bgl.mall.common.ServerResponse;
 import com.bgl.mall.pojo.User;
 import com.bgl.mall.service.IUserService;
-//import IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * Created by BGL on 2017/5/15.
  */
-@Controller
+@RestController
 @RequestMapping("/user/")
 public class UserController {
 
@@ -31,8 +29,7 @@ public class UserController {
      * @param session
      * @return
     */
-    @RequestMapping(value = "login.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "login.do")
     public ServerResponse<User> login(String username, String password, HttpSession session){
         ServerResponse<User> response = iUserService.login(username, password);
         if(response.isSuccess()){
@@ -45,8 +42,7 @@ public class UserController {
      * @param session
      * @return
     */
-    @RequestMapping(value = "logout.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "logout.do")
     public ServerResponse<String> logout(HttpSession session){
         session.removeAttribute(Constant.CURRENT_USER);
         return ServerResponse.createBySuccess();
@@ -57,8 +53,7 @@ public class UserController {
      * @param user
      * @return
     */
-    @RequestMapping(value = "register.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "register.do")
     public ServerResponse<String> register(User user){
         return iUserService.register(user);
     }
@@ -69,8 +64,7 @@ public class UserController {
      * @param type
      * @return
     */
-    @RequestMapping(value = "check_valid.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "check_valid.do")
     public ServerResponse<String> checkValid(String str, String type){
         return iUserService.checkValid(str, type);
     }
@@ -80,8 +74,7 @@ public class UserController {
      * @param session
      * @return
     */
-    @RequestMapping(value = "get_user_info.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "get_user_info.do")
     public ServerResponse<User> getUserInfo(HttpSession session){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user != null){
@@ -94,26 +87,22 @@ public class UserController {
      * @param username
      * @return
     */
-    @RequestMapping(value = "forget_get_question.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "forget_get_question.do")
     public ServerResponse<String> selectQuestion(String username){
         return iUserService.selectQuestion(username);
     }
 
-    @RequestMapping(value = "forget_check_answer.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "forget_check_answer.do")
     public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer){
         return iUserService.checkAnswer(username, question, answer);
     }
 
-    @RequestMapping(value = "forget_reset_password.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "forget_reset_password.do")
     public ServerResponse<String> forgetResetPswd(String username, String passwordNew, String forgetToken){
         return iUserService.forgetResetPswd(username, passwordNew, forgetToken);
     }
 
-    @RequestMapping(value = "reset_password.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "reset_password.do")
     public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
@@ -122,8 +111,7 @@ public class UserController {
         return iUserService.resetPassword(passwordOld, passwordNew, user);
     }
 
-    @RequestMapping(value = "update_information.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "update_information.do")
     public ServerResponse<User> updateInfo(HttpSession session, User user){
         User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
         if(currentUser == null){
@@ -139,8 +127,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "get_information.do", method= RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "get_information.do")
     public ServerResponse<User> getInformation(HttpSession session){
         User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
         if(currentUser == null){
