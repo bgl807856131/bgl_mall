@@ -24,11 +24,11 @@ public class ProductController {
     }
 
     @PostMapping("list.do")
-    public ServerResponse<PageInfo> list(@RequestParam(value = "keyWord", required = false)String keyWord,
+    public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false)String keyword,
                                          @RequestParam(value = "categoryId", required = false)Integer categoryId,
                                          @RequestParam(value = "pageNum", defaultValue = "1")int pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                          @RequestParam(value = "orderBy", defaultValue = "") String orderBy){
-        return iProductService.getProductByKeywordCategory(keyWord, categoryId, pageNum, pageSize, orderBy);
+        return iProductService.getProductByKeywordCategory(keyword, categoryId, pageNum, pageSize, orderBy);
     }
 }

@@ -190,7 +190,7 @@ public class ProductServiceImpl implements IProductService {
         if(StringUtils.isBlank(keyword) && categoryId == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-        List<Integer> categoryIdList = new ArrayList<Integer>();
+        List<Integer> categoryIdList = Lists.newArrayList();
 
         if(categoryId != null){
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
