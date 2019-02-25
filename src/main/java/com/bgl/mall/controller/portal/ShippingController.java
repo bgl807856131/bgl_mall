@@ -7,6 +7,7 @@ import com.bgl.mall.pojo.Shipping;
 import com.bgl.mall.pojo.User;
 import com.bgl.mall.service.IShippingService;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/shipping/")
+@Slf4j
 public class ShippingController {
 
     @Autowired
@@ -28,8 +30,8 @@ public class ShippingController {
     @PostMapping("add.do")
     public ServerResponse add(HttpSession session, Shipping shipping){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.add(user.getId(), shipping);
     }

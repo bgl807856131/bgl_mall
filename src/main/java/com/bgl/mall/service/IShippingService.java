@@ -1,8 +1,8 @@
 package com.bgl.mall.service;
 
-import com.github.pagehelper.PageInfo;
 import com.bgl.mall.common.ServerResponse;
 import com.bgl.mall.pojo.Shipping;
+import com.github.pagehelper.PageInfo;
 
 /**
  * Created by BGL on 2017/8/15.

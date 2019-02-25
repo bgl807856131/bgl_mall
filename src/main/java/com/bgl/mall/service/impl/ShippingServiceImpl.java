@@ -1,12 +1,12 @@
 package com.bgl.mall.service.impl;
 
+import com.bgl.mall.common.ServerResponse;
 import com.bgl.mall.dao.ShippingMapper;
 import com.bgl.mall.pojo.Shipping;
 import com.bgl.mall.service.IShippingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.bgl.mall.common.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +26,9 @@ public class ShippingServiceImpl implements IShippingService {
     public ServerResponse add(Integer userId, Shipping shipping){
         shipping.setUserId(userId);
         int rowCount = shippingMapper.insert(shipping);
-        if(rowCount > 0){
+        if (rowCount > 0) {
             Map result = Maps.newHashMap();
-            result.put("shippingId", result);
+            result.put("shippingId", shipping.getId());
             return ServerResponse.createBySuccess("新建地址成功", result);
         }
         return ServerResponse.createByErrorMessage("新建地址失败");

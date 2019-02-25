@@ -1,7 +1,7 @@
 package com.bgl.mall.service;
 
 import com.bgl.mall.common.ServerResponse;
-import net.sf.jsqlparser.schema.Server;
+import com.bgl.mall.vo.CartVo;
 
 /**
  * @author Bu Guoliang
@@ -10,5 +10,15 @@ import net.sf.jsqlparser.schema.Server;
  */
 public interface ICartService {
 
-    public ServerResponse add(Integer userId, Integer productId, Integer count);
+    ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count);
+
+    ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count);
+
+    ServerResponse<CartVo> deleteProduct(Integer userId, String productIds);
+
+    ServerResponse<CartVo> list(Integer userId);
+
+    ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked);
+
+    ServerResponse<Integer> getCartProductCount(Integer userId);
 }
