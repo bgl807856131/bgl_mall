@@ -80,7 +80,7 @@ public class UserController {
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
     }
 
     /**
@@ -106,7 +106,7 @@ public class UserController {
     public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew){
         User user = (User)session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorMessage("用户未登录");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iUserService.resetPassword(passwordOld, passwordNew, user);
     }
@@ -115,7 +115,7 @@ public class UserController {
     public ServerResponse<User> updateInfo(HttpSession session, User user){
         User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
         if(currentUser == null){
-            return ServerResponse.createByErrorMessage("用户未登录");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         user.setId(currentUser.getId());
         user.setUsername(currentUser.getUsername());
@@ -131,7 +131,7 @@ public class UserController {
     public ServerResponse<User> getInformation(HttpSession session){
         User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
         if(currentUser == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iUserService.getInformation(currentUser.getId());
     }

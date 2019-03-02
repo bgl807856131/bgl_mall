@@ -40,7 +40,7 @@ public class ShippingController {
     public ServerResponse delete(HttpSession session, Integer shippingId){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.delete(user.getId(), shippingId);
     }
@@ -49,7 +49,7 @@ public class ShippingController {
     public ServerResponse update(HttpSession session, Shipping shipping){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.update(user.getId(), shipping);
     }
@@ -58,7 +58,7 @@ public class ShippingController {
     public ServerResponse select(HttpSession session, Integer shippingId){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.select(user.getId(), shippingId);
     }
@@ -69,7 +69,7 @@ public class ShippingController {
                                          HttpSession session){
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.list(user.getId(), pageNum, pageSize);
     }
