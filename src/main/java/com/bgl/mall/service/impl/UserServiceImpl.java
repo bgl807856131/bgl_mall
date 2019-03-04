@@ -106,7 +106,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<String> forgetResetPswd(String username,String passwordNew,String forgetToken){
-        if(org.apache.commons.lang3.StringUtils.isBlank(forgetToken)){
+        if(StringUtils.isBlank(forgetToken)){
             return ServerResponse.createByErrorMessage("参数错误,token需要传递");
         }
         ServerResponse validResponse = this.checkValid(username,Constant.USERNAME);
@@ -114,12 +114,12 @@ public class UserServiceImpl implements IUserService {
             //用户不存在
             return ServerResponse.createByErrorMessage("用户不存在");
         }
-        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
-        if(org.apache.commons.lang3.StringUtils.isBlank(token)){
+        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + username);
+        if(StringUtils.isBlank(token)){
             return ServerResponse.createByErrorMessage("token无效或者过期");
         }
 
-        if(org.apache.commons.lang3.StringUtils.equals(forgetToken,token)){
+        if(StringUtils.equals(forgetToken,token)){
             String md5Password  = MD5Util.MD5EncodeUtf8(passwordNew);
             int rowCount = userMapper.updatePasswordByUsername(username,md5Password);
 

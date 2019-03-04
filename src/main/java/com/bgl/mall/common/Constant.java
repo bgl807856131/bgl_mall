@@ -62,6 +62,15 @@ public class Constant {
             this.code = code;
             this.value = value;
         }
+
+        public static OrderStatusEnum codeOf(int code){
+            for (OrderStatusEnum orderStatusEnum : values()) {
+                if (code == orderStatusEnum.getCode()) {
+                    return orderStatusEnum;
+                }
+            }
+            throw new RuntimeException("没有找到对应的枚举");
+        }
     }
 
     public interface aliCallbck{
@@ -82,6 +91,28 @@ public class Constant {
         PayPlatformEnum(int code, String value){
             this.code = code;
             this.value = value;
+        }
+    }
+
+    @Getter
+    public enum PaymentTypeEnum{
+        PAY_ONLINE(1, "在线支付");
+
+        private final int code;
+        private final String value;
+
+        PaymentTypeEnum(int code, String value){
+            this.code = code;
+            this.value = value;
+        }
+
+        public static PaymentTypeEnum codeOf(int code){
+            for (PaymentTypeEnum paymentTypeEnum : values()) {
+                if (code == paymentTypeEnum.getCode()) {
+                    return paymentTypeEnum;
+                }
+            }
+            throw new RuntimeException("没有找到对应的枚举");
         }
     }
 }

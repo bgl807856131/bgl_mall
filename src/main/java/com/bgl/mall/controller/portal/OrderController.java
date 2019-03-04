@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,16 +34,76 @@ public class OrderController {
     @Autowired
     private IOrderService iOrderService;
 
+    @PostMapping("create.do")
+    public ServerResponse create(HttpSession session, Integer shippingId) {
+        log.info("【order/create】 request params ==> shippingId = {}", shippingId);
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        ServerResponse response = iOrderService.createOrder(user.getId(), shippingId);
+        log.info("【order/create】 response data ==> {}", JsonUtil.obj2String(response));
+        return response;
+    }
+
+    @PostMapping("cancel.do")
+    public ServerResponse create(HttpSession session, Long orderNo) {
+        log.info("【order/cancel】 request params ==> orderNo = {}", orderNo);
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        ServerResponse response = iOrderService.cancelOrder(user.getId(), orderNo);
+        log.info("【order/cancel】 response data ==> {}", JsonUtil.obj2String(response));
+        return response;
+    }
+
+    @PostMapping("get_order_cart_product.do")
+    public ServerResponse getOrderCartProduct(HttpSession session) {
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        ServerResponse response = iOrderService.getOrderCartProduct(user.getId());
+        log.info("【order/getOrderCartProduct】 response data ==> {}", JsonUtil.obj2String(response));
+        return response;
+    }
+
+    @PostMapping("detail.do")
+    public ServerResponse getOrderDetail(HttpSession session, Long orderNo) {
+        log.info("【order/getOrderDetail】 request params ==> orderNo = {}", orderNo);
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        ServerResponse response = iOrderService.getOrderDetail(user.getId(), orderNo);
+        log.info("【order/getOrderDetail】 response data ==> {}", JsonUtil.obj2String(response));
+        return response;
+    }
+
+    @PostMapping("list.do")
+    public ServerResponse list(HttpSession session,
+                               @RequestParam(value = "pageNum", defaultValue = "1")int pageNum,
+                               @RequestParam(value = "pageSize", defaultValue = "10")int pageSize) {
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        ServerResponse response = iOrderService.getOrderList(user.getId(), pageNum, pageSize);
+        log.info("【order/getOrderDetail】 response data ==> {}", JsonUtil.obj2String(response));
+        return response;
+    }
+
     @PostMapping("pay.do")
     public ServerResponse pay(HttpSession session, Long orderNo, HttpServletRequest request) {
         log.info("【order/pay】 request params ==> orderNo = {}", orderNo);
-        User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
-        if(currentUser == null){
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         String path = request.getSession().getServletContext().getRealPath("upload");
         log.info("【order/pay】 path : {}", path);
-        ServerResponse response = iOrderService.pay(currentUser.getId(), orderNo, path);
+        ServerResponse response = iOrderService.pay(user.getId(), orderNo, path);
         log.info("【order/pay】 response data ==> {}", JsonUtil.obj2String(response));
         return response;
     }
@@ -84,11 +145,11 @@ public class OrderController {
     @PostMapping("query_order_pay_status.do")
     public ServerResponse<Boolean> queryOrderPayStatus(HttpSession session, Long orderNo) {
         log.info("【order/queryOrderPayStatus】 request params ==> orderNo = {}", orderNo);
-        User currentUser = (User)session.getAttribute(Constant.CURRENT_USER);
-        if(currentUser == null){
+        User user = (User)session.getAttribute(Constant.CURRENT_USER);
+        if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        ServerResponse response = iOrderService.queryOrderPayStatus(currentUser.getId(), orderNo);
+        ServerResponse response = iOrderService.queryOrderPayStatus(user.getId(), orderNo);
         if (response.isSuccess()) {
             return ServerResponse.createBySuccess(true);
         }
