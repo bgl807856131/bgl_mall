@@ -10,11 +10,11 @@
         </filter>
     </appender>
 
-    <appender name="mmall" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--<File>d:/mmalllog/mmall.log</File>-->
-        <File>/developer/apache-tomcat-7.0.73/logs/mmall.log</File>
+    <appender name="bglmall" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<File>d:/bglmalllog/bglmall.log</File>-->
+        <File>/developer/apache-tomcat-7.0.73/logs/bglmall.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/developer/apache-tomcat-7.0.73/logs/mmall.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>/developer/apache-tomcat-7.0.73/logs/bglmall.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
@@ -25,11 +25,11 @@
 
 
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--<File>d:/mmalllog/error.log</File>-->
+        <!--<File>d:/bglmalllog/error.log</File>-->
         <File>/developer/apache-tomcat-7.0.73/logs/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>/devsoft/apache-tomcat-7.0.73/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
-            <!--<fileNamePattern>d:/mmalllog/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>-->
+            <!--<fileNamePattern>d:/bglmalllog/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>-->
             <append>true</append>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
@@ -43,12 +43,12 @@
         </filter>
     </appender>
 
-    <logger name="com.mmall" additivity="false" level="INFO" >
-        <appender-ref ref="mmall" />
+    <logger name="com.bgl.mall" additivity="false" level="INFO" >
+        <appender-ref ref="bglmall" />
         <appender-ref ref="console"/>
     </logger>
 
-    <logger name="com.mmall.dao" level="DEBUG"/>
+    <logger name="com.bgl.mall.dao" level="DEBUG"/>
 
     <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->
         <!--<appender-ref ref="console"/>-->

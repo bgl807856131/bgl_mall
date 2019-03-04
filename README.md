@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 mmall_learning
 
 后端技术架构:
@@ -8,3 +9,6 @@ mysql
 guava
 jackson
 jodatime
+=======
+bglmall电商平台
+>>>>>>> v1.0
