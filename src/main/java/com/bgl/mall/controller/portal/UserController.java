@@ -80,7 +80,7 @@ public class UserController {
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
     }
 
     /**
