@@ -5,7 +5,6 @@ import com.bgl.mall.common.ResponseCode;
 import com.bgl.mall.common.ServerResponse;
 import com.bgl.mall.pojo.User;
 import com.bgl.mall.service.IUserService;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
